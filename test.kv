@@ -1,6 +1,32 @@
-#:kivy 1.0
-
-WelcomeScreen:
+<RootScreen>:
+    WelcomeScreen:
+    QuestionScreen:
+    
+<WelcomeScreen>:
+    name: 'home'
     Button:
         text: 'Download DB'
         on_press: root.download_db()
+<QuestionScreen>:
+    name: 'question'
+    on_pre_enter: root.display_question()
+    question_widget: question_label
+    answer_widget: answer_input
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            id: question_label
+        TextInput:
+            id: answer_input
+            focused: True
+            multiline: True
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
+            size_hint: (1,.1)
+            Button:
+                text: 'Next'
+                halign: 'center'
+                valign: 'middle'
+                size_hint: (.1,1)
+                on_press: root.display_question()
