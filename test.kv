@@ -3,10 +3,33 @@
     QuestionScreen:
     
 <WelcomeScreen>:
-    name: 'home'
-    Button:
-        text: 'Download DB'
-        on_press: root.download_db()
+    name: 'login'
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Crowd.GQ'
+            font_size: '50sp'
+        GridLayout:
+            cols: 1
+            row_force_default: True
+            row_default_height: 40
+            padding: [10,10,10,10]
+            spacing: [0,5]
+            TextInput:
+                id: username_input
+                hint_text: 'Username'
+                multiline: False
+            TextInput:
+                id: password_input
+                hint_text: 'Password'
+                password: True
+                multiline: False
+            Button:
+                text: 'Login'
+                on_press: root.download_db()
+            Button:
+                text: 'Signup'
+                on_press: root.download_db()
 <QuestionScreen>:
     name: 'question'
     on_pre_enter: root.display_question()
