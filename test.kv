@@ -1,9 +1,12 @@
 <RootScreen>:
     WelcomeScreen:
     QuestionScreen:
-    
+    RoleScreen:
+    NewJobScreen:
+    CompleteTasksScreen:
+
 <WelcomeScreen>:
-    name: 'login'
+    name: 'login_screen'
     BoxLayout:
         orientation: 'vertical'
         Label:
@@ -26,10 +29,113 @@
                 multiline: False
             Button:
                 text: 'Login'
-                on_press: root.download_db()
+                on_press: root.login()
             Button:
                 text: 'Signup'
-                on_press: root.download_db()
+                on_press: root.signup()
+
+<RoleScreen>:
+    name: 'role_screen'
+    BoxLayout:
+        orientation: 'vertical'
+        GridLayout:
+            cols: 1
+            row_force_default: True
+            row_default_height: 40
+            padding: [10,10,10,10]
+            spacing: [0,5]
+            Button:
+                text: 'Post a Job'
+                on_press: root.new_job()
+            Button:
+                text: 'Complete Tasks'
+                on_press: root.complete_tasks()
+
+<CompleteTasksScreen>:
+    name: 'complete_tasks_screen'
+    TabbedPanel:
+        do_default_tab: False
+
+        TabbedPanelItem:
+            text: 'Jobs'
+            ListView:
+                item_strings: [str(index) for index in range(100)]
+        TabbedPanelItem:
+            text: 'Verifications'
+            ListView:
+                item_strings: [str(index) for index in range(100)]
+
+<NewJobScreen>:
+    name: 'new_job_screen'
+    GridLayout:
+        padding: [10,10,10,10]
+        spacing: [0,5]
+        cols: 1
+        row_default_height: 40
+        height: self.minimum_height
+        TextInput:
+            id: job_title_input
+            size_hint_y: None
+            height: 40
+            hint_text: 'Job Title'
+            multiline: False
+        TextInput:
+            id: job_description_input
+            hint_text: 'Job Description'
+            size_hint_y: None
+            height: 200
+            multiline: True
+        TextInput:
+            id: job_tags_input
+            size_hint_y: None
+            height: 40
+            hint_text: 'Tags'
+            multiline: False
+        TextInput:
+            id: job_due_input
+            size_hint_y: None
+            height: 40
+            hint_text: 'Due date'
+            multiline: False
+        GridLayout:
+            cols: 2
+            row_default_height: 40
+            height: self.minimum_height
+            spacing: [5,5]
+            TextInput:
+                id: job_unit_price_input
+                size_hint_y: None
+                height: 40
+                hint_text: 'Unit price'
+                multiline: False
+            TextInput:
+                id: job_verification_price_input
+                size_hint_y: None
+                height: 40
+                hint_text: 'Verification price'
+                multiline: False
+            TextInput:
+                id: job_verifications_requested_input
+                size_hint_y: None
+                height: 40
+                hint_text: 'Verifications Requested'
+                multiline: False
+            TextInput:
+                id: job_budget_input
+                size_hint_y: None
+                height: 40
+                hint_text: 'Budget'
+                multiline: False
+        Button:
+            text: 'Post a Job'
+            size_hint_y: None
+            height: 40
+            on_press: root.create_new_job()
+        Button:
+            text: 'Cancel'
+            size_hint_y: None
+            height: 40
+            on_press: root.cancel()
 <QuestionScreen>:
     name: 'question'
     on_pre_enter: root.display_question()

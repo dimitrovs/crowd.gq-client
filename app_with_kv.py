@@ -9,6 +9,7 @@ import os
 import kivy
 import sqlite3
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.tabbedpanel import TabbedPanel
 from kivy.network.urlrequest import UrlRequest
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -32,8 +33,8 @@ def get_answers_db():
     print answers_db_file
     return answers_db_file
 
+
 class WelcomeScreen(Screen):
-    
     def got_db(self,req,results):
         os.remove(get_answers_db())
         conn = sqlite3.connect(get_answers_db())
@@ -45,16 +46,45 @@ class WelcomeScreen(Screen):
         finally:
             conn.close()
         self.manager.current = 'question'
+
     def got_redirect(self,req,result):
         print result
+
     def got_failure(self,req,failure):
         print failure
+
     def got_error(self,req,failure):
         print failure
     
     def download_db(self):
         req = UrlRequest(url,on_success=self.got_db, on_redirect=self.got_redirect, on_failure=self.got_failure, on_error=self.got_error,
                  file_path=get_local_file())
+
+    def login(self):
+        self.manager.current = 'role_screen'
+
+    def signup(self):
+        self.manager.current = 'signup_screen'
+
+
+class RoleScreen(Screen):
+    def new_job(self):
+        self.manager.current = 'new_job_screen'
+
+    def complete_tasks(self):
+        self.manager.current = 'complete_tasks_screen'
+
+
+class NewJobScreen(Screen):
+    def create_new_job(self):
+        self.manager.current = 'new_job_screen'
+
+    def cancel(self):
+        self.manager.current = 'role_screen'
+
+class CompleteTasksScreen(Screen):
+    pass
+
 
 class QuestionScreen(Screen):
     question_widget = ObjectProperty()
@@ -106,8 +136,10 @@ class QuestionScreen(Screen):
         else:
             self.manager.current = 'home'
 
+
 class RootScreen(ScreenManager):
     pass
+
 
 class TestApp(App):
    def build(self):
